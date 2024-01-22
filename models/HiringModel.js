@@ -1,13 +1,10 @@
 const mongoose = require("mongoose");
+const { User, UserType } = require("./UserModel");
+
 const HiringSchema = new mongoose.Schema({
-    email : {
-        type : String,
-        required :  true
-    },
-    password : {
-        type : String,
-        required : true
-    }
-})
-const Hiring = mongoose.model('Hiring',HiringSchema);
+    // Add any fields specific to Hiring
+});
+
+const Hiring = User.discriminator(UserType.Hiring, HiringSchema);
+
 module.exports = Hiring;

@@ -3,8 +3,11 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 const ContentCreatorModel = require("../models/ContentCreatorModel.js");
+const HiringModel = require("../models/HiringModel.js");
 const PostsModel = require("../models/PostModel.js");
 const UploadFile = require("../middlewares/cloudinary_service.js");
+const {UserModel,UserType} = require("../models/UserModel.js")
+//const MessageModel = require("../models/MessageModel.js");
 exports.Register = async(req,res) => {
     try {
         const {email,password,contenttype} = req.body;
@@ -20,6 +23,7 @@ exports.Register = async(req,res) => {
         creatorNew.password = await bcrypt.hash(password,salt);
         const initialContentArray = Array.isArray(contenttype) ? contenttype : [contenttype];
         creatorNew.contenttype = initialContentArray
+        creatorNew.userType = UserType.ContentCreator
         await creatorNew.save()
         .then((saved,err) => {
             if(saved){
@@ -48,7 +52,8 @@ exports.Login = async(req,res) => {
         }
         const payload = {
             CC : {
-                id : ContentCreatorPresent._id
+                id : ContentCreatorPresent._id,
+                "contentCreator" : true
             }
         }
         jwt.sign(payload,process.env.JWT_KEY,{expiresIn : 3600},(err,token)=>{
@@ -107,3 +112,19 @@ exports.GetPosts = async(req,res) => {
         return res.status(200).json({data : mappedResult})
     });
 }
+/*exports.GetData = async(req,res) => {
+    const page = req.query.page || 1;
+    const lastTimestamp = req.query.lastTimestamp || Date.now();
+    const pageSize = 10;
+    const startIndex = (page - 1) * pageSize;
+    try {
+        const data = await 
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({"Could not fetch the data"});
+    }
+}*/
+/*exports.AddDatainMessageModel = async(req,res) => {
+    const Hirers = await HiringModel.find({});
+    console.log(Hirers)
+}*/

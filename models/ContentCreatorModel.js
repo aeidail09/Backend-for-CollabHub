@@ -1,17 +1,14 @@
 const mongoose = require("mongoose");
+const { User, UserType } = require("./UserModel");
+
 const ContentCreatorSchema = new mongoose.Schema({
-    email : {
-        type : String,
-        required : true
+    contentTypes: {
+        type: [String],
+        required: true,
     },
-    password : {
-        type : String,
-        required : true
-    },
-    contenttype : {
-        type : [String],
-        required : true
-    }
-})
-const ContentCreator = mongoose.model('ContentCreator',ContentCreatorSchema);
+    // Add any other fields specific to ContentCreator
+});
+
+const ContentCreator = User.discriminator(UserType.ContentCreator, ContentCreatorSchema);
+
 module.exports = ContentCreator;
