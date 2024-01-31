@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<p style="text-align: center;">
+  <%- include('./partials/head.ejs') %>
+</p>
+
+<body>
+  <style>
+    body {
+      background-image: url("/img/wallp.jpg");
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+  </style>
+
+<p style="text-align: center;">
+  <%- include('./partials/nav.ejs') %>
+</p>
+<p>
+  <h2 style="text-align: center; color: aliceblue;">This is a list of all the available influencers.</h1>
+</p>
+<br><br><br>
+ 
+  <div class="posts" style="text-align: center;color: beige;">
+    <h4>List of influencers:</h4>
+    <% if (posts.length > 0) { %>
+      <% posts.forEach(post => { %>
+        <h5 class="title"><%= post.title %></h5>
+        <br><img src="<%= post.img %>" alt="<%= post.title %>" width="250" height="250"><br>
+      <% }); %>
+    <% } %>
+  </div>
+
+</body>
+</html>

@@ -7,7 +7,7 @@ const path = require('path');
 const mongoose = require("mongoose");
 const ContentCreatorRoute = require("./routes/ContentCreatorRoute.js");
 const HiringRoute = require("./routes/HiringRoute.js");
-mongoose.connect(process.env.MONGODB_URL);
+mongoose.connect(process.env.MONGO_URL);
 mongoose.Promise = global.Promise;
 app.use(morgan("dev"));
 app.use(bodyParser.urlencoded({ extended: false }));
